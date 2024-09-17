@@ -7,9 +7,9 @@ using System.Data.SQLite;
 using System.Collections;
 using System.Diagnostics;
 using System.Windows.Forms;
-using System.Text.RegularExpressions;
-using System.Linq;
 using System.Drawing.Imaging;
+using System.Text.RegularExpressions;
+
 
 namespace DetectionZones
 {
