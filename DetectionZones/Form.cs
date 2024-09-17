@@ -8,8 +8,8 @@ using System.Collections;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
-
-
+using System.Linq;
+using System.Drawing.Imaging;
 
 namespace DetectionZones
 {
@@ -272,6 +272,64 @@ namespace DetectionZones
 
         void readXmlfile()
         {
+            //    XmlDocument dataXmlFile = new XmlDocument();
+            //    if (true)
+            //    {
+
+
+            //        if (File.Exists("E:\\F\\vocord\\Vocord.Traffic Crossroads\\11394 09-41-04 @257068@\\" + "Data.xml"))
+            //        {
+            //            dataXmlFile.Load("E:\\F\\vocord\\Vocord.Traffic Crossroads\\11394 09-41-04 @257068@\\" + "Data.xml");
+
+
+            //            XmlNodeList statusPoints = dataXmlFile.GetElementsByTagName($"Interpolated");
+            //            if (statusPoints.Count > 0)
+            //            {
+            //                XmlNodeList nodePoints = dataXmlFile.SelectNodes("//TrackPoints/TrackPoint");
+            //                if (nodePoints != null)
+            //                {
+            //                    foreach (XmlNode points in nodePoints)
+            //                    {
+            //                        foreach (XmlNode pointsName in points.ChildNodes)
+            //                        {
+            //                            if (pointsName.Name == "RecognitionNumber")
+            //                            {
+            //                                Console.WriteLine("-RecognitionNumber-------------------------");
+            //                                foreach (XmlNode point in pointsName.ChildNodes)
+            //                                {
+            //                                    if (point.Name == "X") { Console.WriteLine("X = " + Int16.Parse(point.InnerText)); }
+            //                                    if (point.Name == "Y") { Console.WriteLine("Y = " + Int16.Parse(point.InnerText)); }
+            //                                }
+            //                            }
+            //                            if (pointsName.Name == "ImageNumber")
+            //                            {
+            //                                Console.WriteLine("-ImageNumber-------------------------");
+            //                                foreach (XmlNode point in pointsName.ChildNodes)
+            //                                {
+            //                                    if (point.Name == "X") { Console.WriteLine("X = " + Int16.Parse(point.InnerText)); }
+            //                                    if (point.Name == "Y") { Console.WriteLine("Y = " + Int16.Parse(point.InnerText)); }
+            //                                }
+            //                            }
+            //                            if (pointsName.Name == "NumberArea")
+            //                            {
+            //                                Console.WriteLine("-NumberArea-------------------------");
+            //                                foreach (XmlNode point in pointsName.ChildNodes)
+            //                                {
+            //                                    if (point.Name == "X") { Console.WriteLine("X = " + Int16.Parse(point.InnerText)); }
+            //                                    if (point.Name == "Y") { Console.WriteLine("Y = " + Int16.Parse(point.InnerText)); }
+            //                                }
+            //                            }
+            //                        }
+            //                        Console.WriteLine("--------------------------------------------------------------------------------------");
+            //                    }
+            //                }
+            //            }
+
+            //        }
+            //    }
+
+
+
             XmlDocument dataXmlFile = new XmlDocument();
             if (carsBox.Items.Count > 0)
             {
@@ -387,15 +445,16 @@ namespace DetectionZones
 
         private void save_Click(object sender, EventArgs e)
         {
-            //dialog.InitialDirectory = Application.StartupPath.ToString();
-            //dialog.AllowNonFileSystemItems = false;
-            //dialog.IsFolderPicker = true;
-            //dialog.Multiselect = false;
 
-            //if (dialog.ShowDialog() == CommonFileDialogResult.Ok)
-            //{
-            //    imageBox.Image.Save(dialog.FileName + "\\" + carsBox.SelectedItem.ToString().Replace(':', '.') + " - " + numberBox.Text.Replace('*', '.') + " - " + imagesBox.SelectedItem.ToString() + ".jpg", ImageFormat.Jpeg);
-            //}
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.InitialDirectory = Application.StartupPath;
+            saveFileDialog.Filter = "Jpeg|*.jpg";
+            saveFileDialog.FileName = $"{carsBox.SelectedItem.ToString().Replace(':', '.')} - {numberBox.Text.Replace('*', '.')} - {imagesBox.SelectedItem.ToString()}.jpg";
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                imageBox.Image.Save(saveFileDialog.FileName, ImageFormat.Jpeg);
+            }
         }
 
         private void numberBox_KeyDown(object sender, KeyEventArgs e)
