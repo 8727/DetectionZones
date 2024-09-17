@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 
 namespace DetectionZones
@@ -429,12 +430,12 @@ namespace DetectionZones
             drawingPolygons();
         }
 
-        private void imageBox_DoubleClick(object sender, EventArgs e)
+        void imageBox_DoubleClick(object sender, EventArgs e)
         {
             Clipboard.SetImage(imageBox.Image);
         }
 
-        private void folder_Click(object sender, EventArgs e)
+        void folder_Click(object sender, EventArgs e)
         {
             if (carsBox.Items.Count > 0)
             {
@@ -443,7 +444,7 @@ namespace DetectionZones
             }
         }
 
-        private void save_Click(object sender, EventArgs e)
+        void save_Click(object sender, EventArgs e)
         {
 
             SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -457,7 +458,7 @@ namespace DetectionZones
             }
         }
 
-        private void numberBox_KeyDown(object sender, KeyEventArgs e)
+        void numberBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyValue == (char)Keys.Enter)
             {
@@ -465,7 +466,7 @@ namespace DetectionZones
             }
         }
 
-        private void search_Click(object sender, EventArgs e)
+        async void search_Click(object sender, EventArgs e)
         {
             carsBox.Items.Clear();
             imagesBox.Items.Clear();
@@ -478,35 +479,37 @@ namespace DetectionZones
 
             if (File.Exists(installDir + @"Database\vtvehicledb.sqlite"))
             {
-                string sqlcar = $"SELECT CHECKTIME, CHANNEL_ID, SCREENSHOT FROM CARS WHERE FULLGRNNUMBER LIKE \"{numberBox.Text.Replace('*', '_').ToUpper()}\"";
-
-                using (var connection = new SQLiteConnection($@"URI=file:{installDir}Database\vtvehicledb.sqlite"))
+                string sqlcar = $"SELECT CHECKTIME, CHANNEL_ID, SCREENSHOT, CARS_ID FROM CARS WHERE FULLGRNNUMBER LIKE \"{numberBox.Text.Replace('*', '_').ToUpper()}\" ORDER BY CARS_ID DESC";
+                await Task.Run(() =>
                 {
-                    connection.Open();
-
-                    SQLiteCommand command = new SQLiteCommand(sqlcar, connection);
-                    using (SQLiteDataReader reader = command.ExecuteReader())
+                    using (var connection = new SQLiteConnection($@"URI=file:{installDir}Database\vtvehicledb.sqlite"))
                     {
-                        if (reader.HasRows)
+                        connection.Open();
+
+                        SQLiteCommand command = new SQLiteCommand(sqlcar, connection);
+                        using (SQLiteDataReader reader = command.ExecuteReader())
                         {
-                            string datetime;
-                            while (reader.Read())
+                            if (reader.HasRows)
                             {
-                                Carfile carfile = new Carfile();
-                                ChannelNameZone channelName = (ChannelNameZone)channel[reader.GetString(1)];
-                                datetime = DateTime.FromFileTime(reader.GetInt64(0)).ToString() + " - " + channelName.channelName;
-                                carfile.channelId = reader.GetString(1);
-                                carfile.patchfile = reader.GetString(2).Remove(reader.GetString(2).LastIndexOf("\\") + 1);
-                                carsBox.Items.Add(datetime);
-                                cars.Add(datetime, carfile);
+                                string datetime;
+                                while (reader.Read())
+                                {
+                                    Carfile carfile = new Carfile();
+                                    ChannelNameZone channelName = (ChannelNameZone)channel[reader.GetString(1)];
+                                    datetime = reader.GetInt64(3).ToString() + " - " + DateTime.FromFileTime(reader.GetInt64(0)).ToString() + " - " + channelName.channelName;
+                                    carfile.channelId = reader.GetString(1);
+                                    carfile.patchfile = reader.GetString(2).Remove(reader.GetString(2).LastIndexOf("\\") + 1);
+                                    carsBox.Items.Add(datetime);
+                                    cars.Add(datetime, carfile);
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show($"There are no driveways with number {numberBox.Text} in the database.", "Number not found", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                             }
                         }
-                        else
-                        {
-                            MessageBox.Show($"There are no driveways with number {numberBox.Text} in the database.", "Number not found", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                        }
                     }
-                }
+                });
             }
             else
             {
