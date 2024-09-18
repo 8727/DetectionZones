@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.GroupBox images;
+            System.Windows.Forms.GroupBox SelectImages;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Ui));
             this.imagesBox = new System.Windows.Forms.ComboBox();
             this.searchNumber = new System.Windows.Forms.GroupBox();
@@ -37,29 +37,30 @@
             this.numberBox = new System.Windows.Forms.TextBox();
             this.datetime = new System.Windows.Forms.GroupBox();
             this.carsBox = new System.Windows.Forms.ComboBox();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.folder = new System.Windows.Forms.Button();
             this.save = new System.Windows.Forms.Button();
             this.imageBox = new System.Windows.Forms.PictureBox();
-            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            images = new System.Windows.Forms.GroupBox();
-            images.SuspendLayout();
+            this.copy = new System.Windows.Forms.Button();
+            SelectImages = new System.Windows.Forms.GroupBox();
+            SelectImages.SuspendLayout();
             this.searchNumber.SuspendLayout();
             this.datetime.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox)).BeginInit();
             this.SuspendLayout();
             // 
-            // images
+            // SelectImages
             // 
-            images.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            images.Controls.Add(this.imagesBox);
-            images.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            images.ForeColor = System.Drawing.Color.White;
-            images.Location = new System.Drawing.Point(781, -3);
-            images.Name = "images";
-            images.Size = new System.Drawing.Size(370, 86);
-            images.TabIndex = 1;
-            images.TabStop = false;
-            images.Text = "Images";
+            SelectImages.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            SelectImages.Controls.Add(this.imagesBox);
+            SelectImages.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            SelectImages.ForeColor = System.Drawing.Color.White;
+            SelectImages.Location = new System.Drawing.Point(733, -3);
+            SelectImages.Name = "SelectImages";
+            SelectImages.Size = new System.Drawing.Size(348, 86);
+            SelectImages.TabIndex = 1;
+            SelectImages.TabStop = false;
+            SelectImages.Text = "Select Images";
             // 
             // imagesBox
             // 
@@ -67,9 +68,10 @@
             this.imagesBox.FormattingEnabled = true;
             this.imagesBox.Location = new System.Drawing.Point(6, 31);
             this.imagesBox.Name = "imagesBox";
-            this.imagesBox.Size = new System.Drawing.Size(358, 32);
+            this.imagesBox.Size = new System.Drawing.Size(335, 32);
             this.imagesBox.TabIndex = 2;
             this.imagesBox.SelectedIndexChanged += new System.EventHandler(this.imagesBox_SelectedIndexChanged);
+            this.imagesBox.MouseHover += new System.EventHandler(this.imagesBox_MouseHover);
             // 
             // searchNumber
             // 
@@ -99,6 +101,7 @@
             this.search.TabIndex = 4;
             this.search.UseVisualStyleBackColor = false;
             this.search.Click += new System.EventHandler(this.search_Click);
+            this.search.MouseHover += new System.EventHandler(this.search_MouseHover);
             // 
             // numberBox
             // 
@@ -107,9 +110,10 @@
             this.numberBox.Name = "numberBox";
             this.numberBox.Size = new System.Drawing.Size(224, 49);
             this.numberBox.TabIndex = 5;
-            this.numberBox.Text = "X888XX888";
+            this.numberBox.Text = "*001%";
             this.numberBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numberBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.numberBox_KeyDown);
+            this.numberBox.MouseHover += new System.EventHandler(this.numberBox_MouseHover);
             // 
             // datetime
             // 
@@ -120,7 +124,7 @@
             this.datetime.ForeColor = System.Drawing.Color.White;
             this.datetime.Location = new System.Drawing.Point(321, -3);
             this.datetime.Name = "datetime";
-            this.datetime.Size = new System.Drawing.Size(454, 86);
+            this.datetime.Size = new System.Drawing.Size(405, 86);
             this.datetime.TabIndex = 6;
             this.datetime.TabStop = false;
             this.datetime.Text = "Date and Time";
@@ -133,9 +137,14 @@
             this.carsBox.FormattingEnabled = true;
             this.carsBox.Location = new System.Drawing.Point(6, 32);
             this.carsBox.Name = "carsBox";
-            this.carsBox.Size = new System.Drawing.Size(442, 32);
+            this.carsBox.Size = new System.Drawing.Size(390, 32);
             this.carsBox.TabIndex = 7;
             this.carsBox.SelectedIndexChanged += new System.EventHandler(this.dateAndTimeBox_SelectedIndexChanged);
+            this.carsBox.MouseHover += new System.EventHandler(this.carsBox_MouseHover);
+            // 
+            // toolTip
+            // 
+            this.toolTip.IsBalloon = true;
             // 
             // folder
             // 
@@ -152,6 +161,7 @@
             this.folder.TabIndex = 8;
             this.folder.UseVisualStyleBackColor = false;
             this.folder.Click += new System.EventHandler(this.folder_Click);
+            this.folder.MouseHover += new System.EventHandler(this.folder_MouseHover);
             // 
             // save
             // 
@@ -162,12 +172,13 @@
             this.save.FlatAppearance.BorderSize = 0;
             this.save.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.save.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.save.Location = new System.Drawing.Point(1160, 12);
+            this.save.Location = new System.Drawing.Point(1090, 12);
             this.save.Name = "save";
             this.save.Size = new System.Drawing.Size(60, 60);
             this.save.TabIndex = 9;
             this.save.UseVisualStyleBackColor = false;
             this.save.Click += new System.EventHandler(this.save_Click);
+            this.save.MouseHover += new System.EventHandler(this.save_MouseHover);
             // 
             // imageBox
             // 
@@ -183,7 +194,23 @@
             this.imageBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.imageBox.TabIndex = 10;
             this.imageBox.TabStop = false;
-            this.imageBox.DoubleClick += new System.EventHandler(this.imageBox_DoubleClick);
+            // 
+            // copy
+            // 
+            this.copy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.copy.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.copy.BackgroundImage = global::DetectionZones.Properties.Resources.copy;
+            this.copy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.copy.FlatAppearance.BorderSize = 0;
+            this.copy.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.copy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.copy.Location = new System.Drawing.Point(1158, 12);
+            this.copy.Name = "copy";
+            this.copy.Size = new System.Drawing.Size(60, 60);
+            this.copy.TabIndex = 11;
+            this.copy.UseVisualStyleBackColor = false;
+            this.copy.Click += new System.EventHandler(this.copy_Click);
+            this.copy.MouseHover += new System.EventHandler(this.copy_MouseHover);
             // 
             // Ui
             // 
@@ -191,18 +218,20 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(1292, 820);
+            this.Controls.Add(this.copy);
             this.Controls.Add(this.folder);
             this.Controls.Add(this.save);
             this.Controls.Add(this.imageBox);
-            this.Controls.Add(images);
+            this.Controls.Add(SelectImages);
             this.Controls.Add(this.datetime);
             this.Controls.Add(this.searchNumber);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(1308, 855);
             this.Name = "Ui";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form";
+            this.Text = "Detection Zones";
             this.Load += new System.EventHandler(this.Ui_Load);
-            images.ResumeLayout(false);
+            SelectImages.ResumeLayout(false);
             this.searchNumber.ResumeLayout(false);
             this.searchNumber.PerformLayout();
             this.datetime.ResumeLayout(false);
@@ -223,6 +252,7 @@
         private System.Windows.Forms.Button save;
         private System.Windows.Forms.Button folder;
         private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.Button copy;
     }
 }
 

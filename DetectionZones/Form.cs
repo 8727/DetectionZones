@@ -93,9 +93,11 @@ namespace DetectionZones
 
         void Ui_Load(object sender, EventArgs e)
         {
-            //carsBox.Enabled = false;
-            //imagesBox.Enabled = false;
-            //save.Enabled = false;
+            carsBox.Enabled = false;
+            imagesBox.Enabled = false;
+            save.Enabled = false;
+            copy.Enabled = false;
+            folder.Enabled = false;
 
             using (RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\WOW6432Node\Vocord\VOCORD Traffic CrossRoads Server"))
             {
@@ -398,8 +400,6 @@ namespace DetectionZones
                                 {
                                     if (vavueNode.Name == "X") { trackPoint.x = Int16.Parse(vavueNode.InnerText); }
                                     if (vavueNode.Name == "Y") { trackPoint.y = Int16.Parse(vavueNode.InnerText); }
-                                    //if (vavueNode.Name == "Width") { trackPoint.width = Int16.Parse(vavueNode.InnerText); }
-                                    //if (vavueNode.Name == "Height") { trackPoint.height = Int16.Parse(vavueNode.InnerText); }
                                 }
                                 carfile.point[indexPoint++] = trackPoint;
                             }
@@ -429,7 +429,7 @@ namespace DetectionZones
             drawingPolygons();
         }
 
-        void imageBox_DoubleClick(object sender, EventArgs e)
+        private void copy_Click(object sender, EventArgs e)
         {
             Clipboard.SetImage(imageBox.Image);
         }
@@ -474,11 +474,15 @@ namespace DetectionZones
             imagesBox.Enabled = false;
             carsBox.Text = string.Empty;
             imagesBox.Text = string.Empty;
+            numberBox.Enabled = false;
+            search.Enabled = false;
             save.Enabled = false;
+            copy.Enabled = false;
+            folder.Enabled = false;
 
             if (File.Exists(installDir + @"Database\vtvehicledb.sqlite"))
             {
-                string sqlcar = $"SELECT CHECKTIME, CHANNEL_ID, SCREENSHOT, CARS_ID FROM CARS WHERE FULLGRNNUMBER LIKE \"{numberBox.Text.Replace('*', '_').ToUpper()}\" ORDER BY CARS_ID DESC";
+                string sqlcar = $"SELECT CHECKTIME, CHANNEL_ID, SCREENSHOT FROM CARS WHERE FULLGRNNUMBER LIKE \"{numberBox.Text.Replace('*', '_').ToUpper()}\" ORDER BY CARS_ID DESC";
                 await Task.Run(() =>
                 {
                     using (var connection = new SQLiteConnection($@"URI=file:{installDir}Database\vtvehicledb.sqlite"))
@@ -495,7 +499,7 @@ namespace DetectionZones
                                 {
                                     Carfile carfile = new Carfile();
                                     ChannelNameZone channelName = (ChannelNameZone)channel[reader.GetString(1)];
-                                    datetime = reader.GetInt64(3).ToString() + " - " + DateTime.FromFileTime(reader.GetInt64(0)).ToString() + " - " + channelName.channelName;
+                                    datetime = DateTime.FromFileTime(reader.GetInt64(0)).ToString("dd.MM.yyyy hh:mm:ss.fff") + " - " + channelName.channelName;
                                     carfile.channelId = reader.GetString(1);
                                     carfile.patchfile = reader.GetString(2).Remove(reader.GetString(2).LastIndexOf("\\") + 1);
                                     carsBox.Items.Add(datetime);
@@ -517,10 +521,55 @@ namespace DetectionZones
             if (carsBox.Items.Count > 0)
             {
                 carsBox.SelectedIndex = 0;
+                numberBox.Enabled = true;
+                search.Enabled = true;
                 carsBox.Enabled = true;
                 imagesBox.Enabled = true;
+                copy.Enabled = true;
+                save.Enabled = true;
+                folder.Enabled = true;
                 readXmlfile();
             }
+            else
+            {
+                numberBox.Enabled = true;
+                search.Enabled = true;
+            }
+        }
+
+        private void numberBox_MouseHover(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(numberBox, "Number to search.");
+        }
+
+        private void search_MouseHover(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(search, "Search for a number in the database.");
+        }
+
+        private void carsBox_MouseHover(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(carsBox, "Found cars in the database.");
+        }
+
+        private void imagesBox_MouseHover(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(imagesBox, "Photos of a passing car.");
+        }
+
+        private void save_MouseHover(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(save, "Save selected photo.");
+        }
+
+        private void copy_MouseHover(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(copy, "Copy the selected photo to the clipboard.");
+        }
+
+        private void folder_MouseHover(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(folder, "Open the folder with the selected car.");
         }
     }
 }
