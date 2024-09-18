@@ -110,7 +110,7 @@
             this.numberBox.Name = "numberBox";
             this.numberBox.Size = new System.Drawing.Size(224, 49);
             this.numberBox.TabIndex = 5;
-            this.numberBox.Text = "*001%";
+            this.numberBox.Text = "*001аА%";
             this.numberBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numberBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.numberBox_KeyDown);
             this.numberBox.MouseHover += new System.EventHandler(this.numberBox_MouseHover);
