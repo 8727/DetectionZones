@@ -248,6 +248,7 @@ namespace DetectionZones
                             if (channelZones.zones[indexZone].type == 2) { color = Color.SkyBlue; } // Зона до стоп-линии
                             if (channelZones.zones[indexZone].type == 3) { color = Color.Blue; } // Зона после стоп-линии
                             if (channelZones.zones[indexZone].type == 4) { color = Color.Red; } // Зона проезда перекрестка на красный свет
+                            if (channelZones.zones[indexZone].type == 6) { color = Color.Yellow; } // Зона начала маневра 
                             if (channelZones.zones[indexZone].type == 10) { color = Color.Pink; } // Зона распознавания номеров
 
 
