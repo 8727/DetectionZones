@@ -33,13 +33,13 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Ui));
             this.imagesBox = new System.Windows.Forms.ComboBox();
             this.searchNumber = new System.Windows.Forms.GroupBox();
+            this.search = new System.Windows.Forms.Button();
             this.numberBox = new System.Windows.Forms.TextBox();
             this.datetime = new System.Windows.Forms.GroupBox();
             this.carsBox = new System.Windows.Forms.ComboBox();
             this.folder = new System.Windows.Forms.Button();
             this.save = new System.Windows.Forms.Button();
             this.imageBox = new System.Windows.Forms.PictureBox();
-            this.search = new System.Windows.Forms.Button();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             images = new System.Windows.Forms.GroupBox();
             images.SuspendLayout();
@@ -83,6 +83,22 @@
             this.searchNumber.TabIndex = 3;
             this.searchNumber.TabStop = false;
             this.searchNumber.Text = "Number";
+            // 
+            // search
+            // 
+            this.search.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.search.BackgroundImage = global::DetectionZones.Properties.Resources.search;
+            this.search.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.search.FlatAppearance.BorderSize = 0;
+            this.search.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.search.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.search.Location = new System.Drawing.Point(240, 18);
+            this.search.Margin = new System.Windows.Forms.Padding(5);
+            this.search.Name = "search";
+            this.search.Size = new System.Drawing.Size(60, 60);
+            this.search.TabIndex = 4;
+            this.search.UseVisualStyleBackColor = false;
+            this.search.Click += new System.EventHandler(this.search_Click);
             // 
             // numberBox
             // 
@@ -169,28 +185,12 @@
             this.imageBox.TabStop = false;
             this.imageBox.DoubleClick += new System.EventHandler(this.imageBox_DoubleClick);
             // 
-            // search
-            // 
-            this.search.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.search.BackgroundImage = global::DetectionZones.Properties.Resources.search;
-            this.search.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.search.FlatAppearance.BorderSize = 0;
-            this.search.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.search.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.search.Location = new System.Drawing.Point(240, 18);
-            this.search.Margin = new System.Windows.Forms.Padding(5);
-            this.search.Name = "search";
-            this.search.Size = new System.Drawing.Size(60, 60);
-            this.search.TabIndex = 4;
-            this.search.UseVisualStyleBackColor = false;
-            this.search.Click += new System.EventHandler(this.search_Click);
-            // 
             // Ui
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.ClientSize = new System.Drawing.Size(1292, 816);
+            this.ClientSize = new System.Drawing.Size(1292, 820);
             this.Controls.Add(this.folder);
             this.Controls.Add(this.save);
             this.Controls.Add(this.imageBox);
