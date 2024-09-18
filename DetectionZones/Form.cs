@@ -249,7 +249,7 @@ namespace DetectionZones
                             if (channelZones.zones[indexZone].type == 3) { color = Color.Blue; } // Зона после стоп-линии
                             if (channelZones.zones[indexZone].type == 4) { color = Color.Red; } // Зона проезда перекрестка на красный свет
                             if (channelZones.zones[indexZone].type == 6) { color = Color.Yellow; } // Зона начала маневра 
-                            if (channelZones.zones[indexZone].type == 10) { color = Color.Pink; } // Зона распознавания номеров
+                            if (channelZones.zones[indexZone].type == 10) { color = Color.Orange; } // Зона распознавания номеров
 
                             Point point1 = new Point(channelZones.zones[indexZone].x1, channelZones.zones[indexZone].y1);
                             Point point2 = new Point(channelZones.zones[indexZone].x2, channelZones.zones[indexZone].y2);
