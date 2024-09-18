@@ -238,19 +238,18 @@ namespace DetectionZones
                             }
                         }
 
-                        var color = Color.LightGray;
-
                         ChannelNameZone channelZones = (ChannelNameZone)channel[carfile.channelId];
 
                         for (Int16 indexZone = 0; indexZone < channelZones.count; indexZone++)
                         {
+                            var color = Color.LightGray;
+
                             if (channelZones.zones[indexZone].type == 0) { color = Color.Green; } // Зона поиска встречного движения
                             if (channelZones.zones[indexZone].type == 2) { color = Color.SkyBlue; } // Зона до стоп-линии
                             if (channelZones.zones[indexZone].type == 3) { color = Color.Blue; } // Зона после стоп-линии
                             if (channelZones.zones[indexZone].type == 4) { color = Color.Red; } // Зона проезда перекрестка на красный свет
                             if (channelZones.zones[indexZone].type == 6) { color = Color.Yellow; } // Зона начала маневра 
                             if (channelZones.zones[indexZone].type == 10) { color = Color.Pink; } // Зона распознавания номеров
-
 
                             Point point1 = new Point(channelZones.zones[indexZone].x1, channelZones.zones[indexZone].y1);
                             Point point2 = new Point(channelZones.zones[indexZone].x2, channelZones.zones[indexZone].y2);
@@ -437,6 +436,7 @@ namespace DetectionZones
 
             if (File.Exists(installDir + @"Database\vtvehicledb.sqlite"))
             {
+                imageBox.Image = Properties.Resources.Searchimg;
                 string sqlcar = $"SELECT CHECKTIME, CHANNEL_ID, SCREENSHOT FROM CARS WHERE FULLGRNNUMBER LIKE \"{numberBox.Text.Replace('*', '_').ToUpper()}\" ORDER BY CARS_ID DESC";
                 await Task.Run(() =>
                 {
@@ -464,6 +464,7 @@ namespace DetectionZones
                             else
                             {
                                 MessageBox.Show($"There are no driveways with number {numberBox.Text} in the database.", "Number not found", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                                imageBox.Image = Properties.Resources.CarNotSelected;
                             }
                         }
                     }

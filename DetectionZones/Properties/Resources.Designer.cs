@@ -63,6 +63,16 @@ namespace DetectionZones.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap CarNotSelected {
+            get {
+                object obj = ResourceManager.GetObject("CarNotSelected", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap copy {
             get {
                 object obj = ResourceManager.GetObject("copy", resourceCulture);
@@ -96,6 +106,16 @@ namespace DetectionZones.Properties {
         internal static System.Drawing.Bitmap search {
             get {
                 object obj = ResourceManager.GetObject("search", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Searchimg {
+            get {
+                object obj = ResourceManager.GetObject("Searchimg", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

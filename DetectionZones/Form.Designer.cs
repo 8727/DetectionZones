@@ -33,15 +33,15 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Ui));
             this.imagesBox = new System.Windows.Forms.ComboBox();
             this.searchNumber = new System.Windows.Forms.GroupBox();
-            this.search = new System.Windows.Forms.Button();
             this.numberBox = new System.Windows.Forms.TextBox();
             this.datetime = new System.Windows.Forms.GroupBox();
             this.carsBox = new System.Windows.Forms.ComboBox();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.copy = new System.Windows.Forms.Button();
             this.folder = new System.Windows.Forms.Button();
             this.save = new System.Windows.Forms.Button();
             this.imageBox = new System.Windows.Forms.PictureBox();
-            this.copy = new System.Windows.Forms.Button();
+            this.search = new System.Windows.Forms.Button();
             SelectImages = new System.Windows.Forms.GroupBox();
             SelectImages.SuspendLayout();
             this.searchNumber.SuspendLayout();
@@ -86,23 +86,6 @@
             this.searchNumber.TabStop = false;
             this.searchNumber.Text = "Number";
             // 
-            // search
-            // 
-            this.search.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.search.BackgroundImage = global::DetectionZones.Properties.Resources.search;
-            this.search.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.search.FlatAppearance.BorderSize = 0;
-            this.search.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.search.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.search.Location = new System.Drawing.Point(240, 18);
-            this.search.Margin = new System.Windows.Forms.Padding(5);
-            this.search.Name = "search";
-            this.search.Size = new System.Drawing.Size(60, 60);
-            this.search.TabIndex = 4;
-            this.search.UseVisualStyleBackColor = false;
-            this.search.Click += new System.EventHandler(this.search_Click);
-            this.search.MouseHover += new System.EventHandler(this.search_MouseHover);
-            // 
             // numberBox
             // 
             this.numberBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -146,6 +129,23 @@
             // 
             this.toolTip.IsBalloon = true;
             // 
+            // copy
+            // 
+            this.copy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.copy.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.copy.BackgroundImage = global::DetectionZones.Properties.Resources.copy;
+            this.copy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.copy.FlatAppearance.BorderSize = 0;
+            this.copy.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.copy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.copy.Location = new System.Drawing.Point(1158, 12);
+            this.copy.Name = "copy";
+            this.copy.Size = new System.Drawing.Size(60, 60);
+            this.copy.TabIndex = 11;
+            this.copy.UseVisualStyleBackColor = false;
+            this.copy.Click += new System.EventHandler(this.copy_Click);
+            this.copy.MouseHover += new System.EventHandler(this.copy_MouseHover);
+            // 
             // folder
             // 
             this.folder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -186,7 +186,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.imageBox.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.imageBox.Image = ((System.Drawing.Image)(resources.GetObject("imageBox.Image")));
+            this.imageBox.Image = global::DetectionZones.Properties.Resources.CarNotSelected;
             this.imageBox.InitialImage = null;
             this.imageBox.Location = new System.Drawing.Point(6, 88);
             this.imageBox.Name = "imageBox";
@@ -195,22 +195,22 @@
             this.imageBox.TabIndex = 10;
             this.imageBox.TabStop = false;
             // 
-            // copy
+            // search
             // 
-            this.copy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.copy.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.copy.BackgroundImage = global::DetectionZones.Properties.Resources.copy;
-            this.copy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.copy.FlatAppearance.BorderSize = 0;
-            this.copy.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.copy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.copy.Location = new System.Drawing.Point(1158, 12);
-            this.copy.Name = "copy";
-            this.copy.Size = new System.Drawing.Size(60, 60);
-            this.copy.TabIndex = 11;
-            this.copy.UseVisualStyleBackColor = false;
-            this.copy.Click += new System.EventHandler(this.copy_Click);
-            this.copy.MouseHover += new System.EventHandler(this.copy_MouseHover);
+            this.search.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.search.BackgroundImage = global::DetectionZones.Properties.Resources.search;
+            this.search.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.search.FlatAppearance.BorderSize = 0;
+            this.search.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.search.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.search.Location = new System.Drawing.Point(240, 18);
+            this.search.Margin = new System.Windows.Forms.Padding(5);
+            this.search.Name = "search";
+            this.search.Size = new System.Drawing.Size(60, 60);
+            this.search.TabIndex = 4;
+            this.search.UseVisualStyleBackColor = false;
+            this.search.Click += new System.EventHandler(this.search_Click);
+            this.search.MouseHover += new System.EventHandler(this.search_MouseHover);
             // 
             // Ui
             // 
