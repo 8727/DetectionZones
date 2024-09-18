@@ -274,64 +274,6 @@ namespace DetectionZones
 
         void readXmlfile()
         {
-            //    XmlDocument dataXmlFile = new XmlDocument();
-            //    if (true)
-            //    {
-
-
-            //        if (File.Exists("E:\\F\\vocord\\Vocord.Traffic Crossroads\\11394 09-41-04 @257068@\\" + "Data.xml"))
-            //        {
-            //            dataXmlFile.Load("E:\\F\\vocord\\Vocord.Traffic Crossroads\\11394 09-41-04 @257068@\\" + "Data.xml");
-
-
-            //            XmlNodeList statusPoints = dataXmlFile.GetElementsByTagName($"Interpolated");
-            //            if (statusPoints.Count > 0)
-            //            {
-            //                XmlNodeList nodePoints = dataXmlFile.SelectNodes("//TrackPoints/TrackPoint");
-            //                if (nodePoints != null)
-            //                {
-            //                    foreach (XmlNode points in nodePoints)
-            //                    {
-            //                        foreach (XmlNode pointsName in points.ChildNodes)
-            //                        {
-            //                            if (pointsName.Name == "RecognitionNumber")
-            //                            {
-            //                                Console.WriteLine("-RecognitionNumber-------------------------");
-            //                                foreach (XmlNode point in pointsName.ChildNodes)
-            //                                {
-            //                                    if (point.Name == "X") { Console.WriteLine("X = " + Int16.Parse(point.InnerText)); }
-            //                                    if (point.Name == "Y") { Console.WriteLine("Y = " + Int16.Parse(point.InnerText)); }
-            //                                }
-            //                            }
-            //                            if (pointsName.Name == "ImageNumber")
-            //                            {
-            //                                Console.WriteLine("-ImageNumber-------------------------");
-            //                                foreach (XmlNode point in pointsName.ChildNodes)
-            //                                {
-            //                                    if (point.Name == "X") { Console.WriteLine("X = " + Int16.Parse(point.InnerText)); }
-            //                                    if (point.Name == "Y") { Console.WriteLine("Y = " + Int16.Parse(point.InnerText)); }
-            //                                }
-            //                            }
-            //                            if (pointsName.Name == "NumberArea")
-            //                            {
-            //                                Console.WriteLine("-NumberArea-------------------------");
-            //                                foreach (XmlNode point in pointsName.ChildNodes)
-            //                                {
-            //                                    if (point.Name == "X") { Console.WriteLine("X = " + Int16.Parse(point.InnerText)); }
-            //                                    if (point.Name == "Y") { Console.WriteLine("Y = " + Int16.Parse(point.InnerText)); }
-            //                                }
-            //                            }
-            //                        }
-            //                        Console.WriteLine("--------------------------------------------------------------------------------------");
-            //                    }
-            //                }
-            //            }
-
-            //        }
-            //    }
-
-
-
             XmlDocument dataXmlFile = new XmlDocument();
             if (carsBox.Items.Count > 0)
             {
@@ -379,27 +321,39 @@ namespace DetectionZones
                     XmlNodeList statusPoints = dataXmlFile.GetElementsByTagName($"Interpolated");
                     if (statusPoints.Count > 0)
                     {
-                        string xmlPoint = null;
-                        if (statusPoints[0].InnerText == "true" | statusPoints[0].InnerText == "True")
-                        {
-                            xmlPoint = $"//TrackPoints/TrackPoint/NumberArea";
-                        }
-                        else
-                        {
-                            xmlPoint = $"//TrackPoints/TrackPoint/RecognitionNumber";
-                        }
-
-                        XmlNodeList nodePoints = dataXmlFile.SelectNodes(xmlPoint);
+                        XmlNodeList nodePoints = dataXmlFile.SelectNodes("//TrackPoints/TrackPoint");
                         if (nodePoints != null)
                         {
                             int indexPoint = 0;
-                            foreach (XmlNode xnode in nodePoints)
+                            foreach (XmlNode points in nodePoints)
                             {
                                 CarTrackPoint trackPoint = new CarTrackPoint();
-                                foreach (XmlNode vavueNode in xnode.ChildNodes)
+                                foreach (XmlNode pointsName in points.ChildNodes)
                                 {
-                                    if (vavueNode.Name == "X") { trackPoint.x = Int16.Parse(vavueNode.InnerText); }
-                                    if (vavueNode.Name == "Y") { trackPoint.y = Int16.Parse(vavueNode.InnerText); }
+                                    if (pointsName.Name == "RecognitionNumber")
+                                    {
+                                        foreach (XmlNode point in pointsName.ChildNodes)
+                                        {
+                                            if (point.Name == "X") { trackPoint.x = Int16.Parse(point.InnerText); }
+                                            if (point.Name == "Y") { trackPoint.y = Int16.Parse(point.InnerText); }
+                                        }
+                                    }
+                                    if (pointsName.Name == "ImageNumber")
+                                    {
+                                        foreach (XmlNode point in pointsName.ChildNodes)
+                                        {
+                                            if (point.Name == "X") { trackPoint.x = Int16.Parse(point.InnerText); }
+                                            if (point.Name == "Y") { trackPoint.y = Int16.Parse(point.InnerText); }
+                                        }
+                                    }
+                                    if (pointsName.Name == "NumberArea")
+                                    {
+                                        foreach (XmlNode point in pointsName.ChildNodes)
+                                        {
+                                            if (point.Name == "X") { trackPoint.x = Int16.Parse(point.InnerText); }
+                                            if (point.Name == "Y") { trackPoint.y = Int16.Parse(point.InnerText); }
+                                        }
+                                    }
                                 }
                                 carfile.point[indexPoint++] = trackPoint;
                             }
