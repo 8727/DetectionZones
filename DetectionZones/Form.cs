@@ -437,7 +437,7 @@ namespace DetectionZones
             if (File.Exists(installDir + @"Database\vtvehicledb.sqlite"))
             {
                 imageBox.Image = Properties.Resources.Searchimg;
-                string sqlcar = $"SELECT CHECKTIME, CHANNEL_ID, SCREENSHOT FROM CARS WHERE FULLGRNNUMBER LIKE \"{numberBox.Text.Replace('*', '_').ToUpper()}\" ORDER BY CARS_ID DESC";
+                string sqlcar = $"SELECT CHECKTIME, CHANNEL_ID, SCREENSHOT, CARS_ID FROM CARS WHERE FULLGRNNUMBER LIKE \"{numberBox.Text.Replace('*', '_').ToUpper()}\" ORDER BY CARS_ID DESC";
                 await Task.Run(() =>
                 {
                     using (var connection = new SQLiteConnection($@"URI=file:{installDir}Database\vtvehicledb.sqlite"))
@@ -454,7 +454,7 @@ namespace DetectionZones
                                 {
                                     Carfile carfile = new Carfile();
                                     ChannelNameZone channelName = (ChannelNameZone)channel[reader.GetString(1)];
-                                    datetime = DateTime.FromFileTime(reader.GetInt64(0)).ToString("dd.MM.yyyy hh:mm:ss.fff") + " - " + channelName.channelName;
+                                    datetime = reader.GetInt64(3).ToString() + " - " + DateTime.FromFileTime(reader.GetInt64(0)).ToString() + " - " + channelName.channelName;
                                     carfile.channelId = reader.GetString(1);
                                     carfile.patchfile = reader.GetString(2).Remove(reader.GetString(2).LastIndexOf("\\") + 1);
                                     carsBox.Items.Add(datetime);
