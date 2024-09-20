@@ -166,7 +166,7 @@ namespace DetectionZones
         {
             if (File.Exists(installDir + @"Database\bpm.db"))
             {
-                string sqlzones = $"SELECT Type, Name, X1, Y1, X2, Y2, X3, Y3, X4, Y4 FROM Zone WHERE ChannelId = \"{id}\" AND Type < 11";
+                string sqlzones = $"SELECT Type, Name, X1, Y1, X2, Y2, X3, Y3, X4, Y4 FROM Zone WHERE ChannelId = \"{id}\""; // AND Type < 11";
                 using (var connection = new SQLiteConnection($@"URI=file:{installDir}Database\bpm.db"))
                 {
                     connection.Open();
@@ -217,6 +217,61 @@ namespace DetectionZones
 
                         Graphics imageBoximg = Graphics.FromImage(imageBox.Image);
                         Pen pen = new Pen(Color.Red, 5);
+
+                        ChannelNameZone channelZones = (ChannelNameZone)channel[carfile.channelId];
+
+                        for (Int16 indexZone = 0; indexZone < channelZones.count; indexZone++)
+                        {
+                            var color = Color.LightGray;
+                            bool paint = true;
+                            switch (channelZones.zones[indexZone].type)
+                            {
+                                case 0:
+                                    color = Color.Green;  // Зона поиска встречного движения
+                                    break;
+                                case 2:
+                                    color = Color.SkyBlue;  // Зона до стоп-линии
+                                    break;
+                                case 3:
+                                    color = Color.Blue;  // Зона после стоп-линии
+                                    break;
+                                case 4:
+                                    color = Color.Red;  // Зона проезда перекрестка на красный свет
+                                    break;
+                                case 6:
+                                    color = Color.Yellow;  // Зона начала маневра
+                                    break;
+                                case 10:
+                                    color = Color.Orange;  // Зона распознавания номеров
+                                    break;
+                                case 11:
+                                    color = Color.LightGreen;  // Полосы
+                                    break;
+                                default:
+                                    color = Color.LightGray;  // Полосы
+                                    break;
+                            }
+                            if (channelZones.zones[indexZone].type == 0 & !checkManeuvers.Checked) { paint = false; } // Зона поиска встречного движения
+                            if (channelZones.zones[indexZone].type == 2 & !checkLights.Checked) { paint = false; } // Зона до стоп-линии
+                            if (channelZones.zones[indexZone].type == 3 & !checkLights.Checked) { paint = false; } // Зона после стоп-линии
+                            if (channelZones.zones[indexZone].type == 4 & !checkLights.Checked) { paint = false; } // Зона проезда перекрестка на красный свет
+                            if (channelZones.zones[indexZone].type == 6 & !checkManeuvers.Checked) { paint = false; } // Зона начала маневра 
+                            if (channelZones.zones[indexZone].type == 11 & !checkLanes.Checked) { paint = false; } // Полосы
+
+                            if (paint) {
+                                Point point1 = new Point(channelZones.zones[indexZone].x1, channelZones.zones[indexZone].y1);
+                                Point point2 = new Point(channelZones.zones[indexZone].x2, channelZones.zones[indexZone].y2);
+                                Point point3 = new Point(channelZones.zones[indexZone].x3, channelZones.zones[indexZone].y3);
+                                Point point4 = new Point(channelZones.zones[indexZone].x4, channelZones.zones[indexZone].y4);
+                                Point[] curvePoints = { point1, point2, point3, point4 };
+                                pen = new Pen(color, 5);
+                                SolidBrush brush = new SolidBrush(Color.FromArgb(trackBar.Value * 10, color));
+                                imageBoximg.FillPolygon(brush, curvePoints);
+                                imageBoximg.DrawPolygon(pen, curvePoints);
+                            }
+                        }
+
+                        pen = new Pen(Color.Red, 5);
                         imageBoximg.DrawRectangle(pen, (imgCar.x - imgCar.width / 2), (imgCar.y - imgCar.height / 2), imgCar.width, imgCar.height);
                         imageBoximg.DrawRectangle(pen, imgCar.x, imgCar.y, 5, 5);
 
@@ -238,29 +293,6 @@ namespace DetectionZones
                             }
                         }
 
-                        ChannelNameZone channelZones = (ChannelNameZone)channel[carfile.channelId];
-
-                        for (Int16 indexZone = 0; indexZone < channelZones.count; indexZone++)
-                        {
-                            var color = Color.LightGray;
-
-                            if (channelZones.zones[indexZone].type == 0) { color = Color.Green; } // Зона поиска встречного движения
-                            if (channelZones.zones[indexZone].type == 2) { color = Color.SkyBlue; } // Зона до стоп-линии
-                            if (channelZones.zones[indexZone].type == 3) { color = Color.Blue; } // Зона после стоп-линии
-                            if (channelZones.zones[indexZone].type == 4) { color = Color.Red; } // Зона проезда перекрестка на красный свет
-                            if (channelZones.zones[indexZone].type == 6) { color = Color.Yellow; } // Зона начала маневра 
-                            if (channelZones.zones[indexZone].type == 10) { color = Color.Orange; } // Зона распознавания номеров
-
-                            Point point1 = new Point(channelZones.zones[indexZone].x1, channelZones.zones[indexZone].y1);
-                            Point point2 = new Point(channelZones.zones[indexZone].x2, channelZones.zones[indexZone].y2);
-                            Point point3 = new Point(channelZones.zones[indexZone].x3, channelZones.zones[indexZone].y3);
-                            Point point4 = new Point(channelZones.zones[indexZone].x4, channelZones.zones[indexZone].y4);
-                            Point[] curvePoints = { point1, point2, point3, point4 };
-                            pen = new Pen(color, 2);
-                            SolidBrush brush = new SolidBrush(Color.FromArgb(50, color));
-                            imageBoximg.FillPolygon(brush, curvePoints);
-                            imageBoximg.DrawPolygon(pen, curvePoints);
-                        }
                         imageBoximg.Dispose();
                         imageBox.Refresh();
                     }
@@ -526,6 +558,51 @@ namespace DetectionZones
         private void folder_MouseHover(object sender, EventArgs e)
         {
             toolTip.SetToolTip(folder, "Open the folder with the selected car.");
+        }
+
+        private void trackBar_Scroll(object sender, EventArgs e)
+        {
+            drawingPolygons();
+        }
+
+        private void checkLanes_CheckedChanged(object sender, EventArgs e)
+        {
+            drawingPolygons();
+        }
+
+        private void checkLights_CheckedChanged(object sender, EventArgs e)
+        {
+            drawingPolygons();
+        }
+
+        private void checkManeuvers_CheckedChanged(object sender, EventArgs e)
+        {
+            drawingPolygons();
+        }
+
+        private void ZoneBox_MouseHover(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(ZoneBox, "Setting up display zones.");
+        }
+
+        private void checkLanes_MouseHover(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(checkLanes, "Strip zones.");
+        }
+
+        private void checkLights_MouseHover(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(checkLights, "Traffic light signal zones.");
+        }
+
+        private void checkManeuvers_MouseHover(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(checkManeuvers, "Maneuvering zones.");
+        }
+
+        private void trackBar_MouseHover(object sender, EventArgs e)
+        {
+            toolTip.SetToolTip(trackBar, "Zone brightness.");
         }
     }
 }
